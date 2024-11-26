@@ -21,9 +21,12 @@ const academySchema = new Schema<IAcademy>(
     academyNumber: {
       type: String,
     },
-    academyMembers: {
-      type: [String],
-    },
+    academyMembers: [
+      {
+        id: String,
+        email: String,
+      },
+    ],
     academyIcon: {
       type: String,
     },

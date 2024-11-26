@@ -1,7 +1,11 @@
 import User from '../user/user.model'
 import { IAcademy } from './academy.interface'
 import Academy from './academy.model'
-import { createAcademyToDb, getAcademyFomDb } from './academy.service'
+import {
+  createAcademyToDb,
+  getAcademyByEmailFromDb,
+  getAcademyFomDb,
+} from './academy.service'
 import { NextFunction, Request, Response } from 'express'
 // export const createAcademy = async (
 //   req: Request,
@@ -117,5 +121,45 @@ export const getAcademy = async (
   res.status(200).json({
     status: 'success',
     data: academy,
+  })
+}
+
+// get academy by email
+
+export const getAcademyByEmail = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  return new Promise(async (resolve, reject) => {
+    const { academyCreatedBy } = req.params
+    console.log(academyCreatedBy, 'received email for academy')
+
+    if (!academyCreatedBy) {
+      res.json(400).json({
+        status: 'error',
+        message: 'Email is required',
+      })
+      return resolve()
+    }
+
+    try {
+      const academy = await getAcademyByEmailFromDb(academyCreatedBy)
+      if (!academy) {
+        res.status(404).json({
+          status: 'error',
+          message: 'academy not found',
+        })
+        return resolve()
+      }
+      res.status(200).json({
+        status: 'success',
+        data: academy,
+      })
+      resolve()
+    } catch (error) {
+      next(error)
+      reject(error)
+    }
   })
 }

@@ -7,7 +7,7 @@ export const handleJoinAcademy = async (
   next: NextFunction,
 ): Promise<any> => {
   try {
-    const { userId, academyName } = req.body
+    const { userId, academyName, email } = req.body
 
     // Validate request payload
     if (!userId || !academyName) {
@@ -18,7 +18,7 @@ export const handleJoinAcademy = async (
     }
 
     // Call service to handle logic
-    const updatedUser = await joinAcademyForUser(userId, academyName)
+    const updatedUser = await joinAcademyForUser(userId, academyName, email)
 
     return res.status(200).json({
       status: 'success',
