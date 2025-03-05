@@ -7,7 +7,16 @@ export const handleJoinAcademy = async (
   next: NextFunction,
 ): Promise<any> => {
   try {
-    const { userId, academyName, email, role, firstName, lastName } = req.body
+    const {
+      userId,
+      academyName,
+      email,
+      role,
+      firstName,
+      lastName,
+      photoURL,
+      academyId,
+    } = req.body
 
     // Validate request payload
     if (!userId || !academyName || !email || !role) {
@@ -25,6 +34,8 @@ export const handleJoinAcademy = async (
       role,
       firstName,
       lastName,
+      photoURL,
+      academyId,
     )
 
     return res.status(200).json({

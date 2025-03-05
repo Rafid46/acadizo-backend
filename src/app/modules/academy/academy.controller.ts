@@ -75,7 +75,7 @@ export const createAcademy = async (
     if (existingAcademy) {
       return res.status(400).json({
         status: 'error',
-        message: 'Academy already exists',
+        message: 'Academy name already exists, try another one',
         insertedId: null,
       })
     }

@@ -40,6 +40,9 @@ const academySchema = new Schema<IAcademy>(
         lastName: {
           type: String,
         },
+        photoURL: {
+          type: String,
+        },
         createdAt: {
           type: Date,
           default: Date.now,

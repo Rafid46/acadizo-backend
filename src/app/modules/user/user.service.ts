@@ -37,6 +37,7 @@ export const updateUserToDb = async (
       new: true,
     },
   )
+  
 
   return updatedNewUser
 }

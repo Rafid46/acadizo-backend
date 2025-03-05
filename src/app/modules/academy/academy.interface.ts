@@ -5,6 +5,7 @@ interface IAcademyMember {
   createdAt: string
   firstName: string
   lastName: string
+  photoURL: string
 }
 
 export type IAcademy = {
