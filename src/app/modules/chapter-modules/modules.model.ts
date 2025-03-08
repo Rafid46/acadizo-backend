@@ -4,7 +4,7 @@ import { IModules } from './modules.interface'
 type ModuleModel = Model<IModules, object>
 const modulesSchema = new Schema<IModules>(
   {
-    modulesId: {
+    moduleId: {
       type: String,
       required: true,
     },

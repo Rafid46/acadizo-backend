@@ -7,7 +7,7 @@ export const findLastModulesId = async () => {
       createdAt: -1,
     })
     .lean()
-  return lastModule?.modulesId
+  return lastModule?.moduleId
 }
 
 export const generateModulesId = async () => {

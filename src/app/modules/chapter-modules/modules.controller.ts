@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { IModules } from './modules.interface'
 import { createModulesInDb, getModulesFromDB } from './modules.service'
+import Modules from './modules.model'
 
 export const createModule = async (
   req: Request,
@@ -43,4 +44,36 @@ export const getModules = async (
     status: 'success',
     data: allModules,
   })
+}
+
+export const deleteModule = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { moduleId } = req.params
+    console.log('Module ID', moduleId)
+    if (!moduleId) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'module id is not found',
+      })
+    }
+
+    const deletedModule = await Modules.findOneAndDelete({ moduleId })
+    if (!deletedModule) {
+      res.status(404).json({
+        status: 'fail',
+        message: 'module not found',
+      })
+    }
+    res.status(200).json({
+      status: 'success',
+      message: 'module deleted',
+      data: deletedModule,
+    })
+  } catch (error) {
+    return next(error)
+  }
 }

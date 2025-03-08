@@ -6,7 +6,7 @@ export const createModulesInDb = async (
   module: IModules,
 ): Promise<IModules | null> => {
   const modulesId = await generateModulesId()
-  module.modulesId = modulesId
+  module.moduleId = modulesId
   const createModules = await Modules.create(module)
   return createModules
 }
