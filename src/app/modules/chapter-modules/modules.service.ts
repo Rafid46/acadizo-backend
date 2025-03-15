@@ -5,8 +5,8 @@ import { generateModulesId } from './modules.utils'
 export const createModulesInDb = async (
   module: IModules,
 ): Promise<IModules | null> => {
-  const modulesId = await generateModulesId()
-  module.moduleId = modulesId
+  const moduleId = await generateModulesId()
+  module.moduleId = moduleId
   const createModules = await Modules.create(module)
   return createModules
 }

@@ -2,7 +2,7 @@ import Modules from './modules.model'
 
 // module id generation
 export const findLastModulesId = async () => {
-  const lastModule = await Modules.findOne({}, { modulesId: 1, _id: 0 })
+  const lastModule = await Modules.findOne({}, { moduleId: 1, _id: 0 })
     .sort({
       createdAt: -1,
     })

@@ -77,3 +77,38 @@ export const deleteModule = async (
     return next(error)
   }
 }
+
+// delete many
+export const deleteModules = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<any> => {
+  try {
+    const { academyId, moduleIds } = req.body
+    if (!moduleIds || !academyId) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'missing academyId and moduleId',
+      })
+    }
+    if (!moduleIds?.length) {
+      res.status(400).json({
+        status: 'fail',
+        message: 'no modules to delete',
+      })
+    }
+
+    const deleteAllModules = await Modules?.deleteMany({
+      academyId: academyId,
+      moduleId: { $in: moduleIds },
+    })
+    return res.status(200).json({
+      status: 'success',
+      data: deleteAllModules,
+      message: 'all modules deleted successfully',
+    })
+  } catch (error) {
+    return next(error)
+  }
+}
