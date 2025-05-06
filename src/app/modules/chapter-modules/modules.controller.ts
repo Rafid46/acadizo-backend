@@ -1,7 +1,12 @@
 import { NextFunction, Request, Response } from 'express'
 import { IModules } from './modules.interface'
-import { createModulesInDb, getModulesFromDB } from './modules.service'
+import {
+  createModulesInDb,
+  getModulesFromDB,
+  updateModuleInDb,
+} from './modules.service'
 import Modules from './modules.model'
+import { updateUserToDb } from '../user/user.service'
 
 export const createModule = async (
   req: Request,
@@ -9,7 +14,8 @@ export const createModule = async (
   next: NextFunction,
 ): Promise<any> => {
   try {
-    const { description, title, heading, academyName, academyId } = req.body
+    const { description, title, heading, academyName, academyId, color } =
+      req.body
     console.log('request body', req.body)
     console.log('Academy ID:', academyId, 'Academy Name:', academyName)
     const file = req.file
@@ -25,6 +31,7 @@ export const createModule = async (
       heading,
       academyName,
       academyId,
+      color,
       file: (file && file.filename) || null,
     } as IModules
     const modules = await createModulesInDb(data)
@@ -107,6 +114,42 @@ export const deleteModules = async (
       status: 'success',
       data: deleteAllModules,
       message: 'all modules deleted successfully',
+    })
+  } catch (error) {
+    return next(error)
+  }
+}
+
+// update/edit module
+export const updateModules = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<any> => {
+  try {
+    const { moduleId } = req.params
+    if (!moduleId) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'moduleId is required',
+      })
+    }
+    const file = req.file
+    const updateData = {
+      ...req.body,
+      file: file?.filename || undefined,
+    }
+    const updatedModule = await updateModuleInDb(moduleId, updateData)
+
+    if (!updatedModule) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'module not found',
+      })
+    }
+    return res.status(200).json({
+      status: 'success',
+      message: 'module updated',
     })
   } catch (error) {
     return next(error)

@@ -6,4 +6,5 @@ export type IModules = {
   title: string
   description: string
   file: string
+  color: string
 }

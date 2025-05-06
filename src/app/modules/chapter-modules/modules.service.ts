@@ -15,3 +15,15 @@ export const getModulesFromDB = async (): Promise<IModules[]> => {
   const modules = await Modules.find()
   return modules
 }
+
+export const updateModuleInDb = async (
+  moduleId: string,
+  updatedData: Partial<IModules>,
+): Promise<IModules | null> => {
+  const updatedModule = await Modules.findOneAndUpdate(
+    { moduleId },
+    updatedData,
+    { new: true },
+  )
+  return updatedModule
+}

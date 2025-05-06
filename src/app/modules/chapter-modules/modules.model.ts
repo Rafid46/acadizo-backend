@@ -32,6 +32,10 @@ const modulesSchema = new Schema<IModules>(
       type: String,
       default: null,
     },
+    color: {
+      type: String,
+      default: null,
+    },
   },
   {
     timestamps: true,
