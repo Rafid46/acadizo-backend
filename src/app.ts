@@ -9,6 +9,7 @@ app.use(cors())
 import userRoutes from './app/modules/user/user.route'
 import academyRoutes from './app/modules/academy/academy.route'
 import moduleRoutes from './app/modules/chapter-modules/module.route'
+import activityRoutes from './app/modules/activity/activity.route'
 import multer from 'multer'
 // parse data
 app.use(express.json())
@@ -59,6 +60,7 @@ app.use('/file', express.static(path.join(__dirname, 'file')))
 app.use('/api/v1/user/', userRoutes)
 app.use('/academy/', academyRoutes)
 app.use('/modules/', moduleRoutes)
+app.use('/activity/', activityRoutes)
 // app.use('/uploads', express.static('uploads'))
 
 app.get('/', async (req: Request, res: Response) => {
