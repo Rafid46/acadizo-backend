@@ -12,3 +12,17 @@ export const getActivityFromDb = async (): Promise<IActivity[]> => {
   const activities = await Activity.find()
   return activities
 }
+
+// post answers
+export const postAnswersService = async (
+  activityId: string,
+  answer: IActivity['answers'][0],
+) => {
+  return await Activity.findOneAndUpdate(
+    { activityId: activityId },
+    {
+      $push: { answers: answer },
+    },
+    { new: true },
+  )
+}

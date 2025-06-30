@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from 'express'
 import { IActivity } from './activity.interface'
-import { createActivitiesService, getActivityFromDb } from './activity.service'
+import {
+  createActivitiesService,
+  getActivityFromDb,
+  postAnswersService,
+} from './activity.service'
 
 export const createActivityCon = async (
   req: Request,
@@ -85,4 +89,16 @@ export const getActivity = async (
     status: 'success',
     data: activity,
   })
+}
+
+// post answers
+export const postAnswer = async (req: Request, res: Response) => {
+  try {
+    const { activityId } = req.params
+    const answer = req.body
+    const updatedActivity = await postAnswersService(activityId, answer)
+    res.status(200).json(updatedActivity)
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to add answer', details: err })
+  }
 }

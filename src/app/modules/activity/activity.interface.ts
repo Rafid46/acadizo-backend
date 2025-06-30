@@ -17,7 +17,7 @@ export type IAnswers = {
   activityId: string
   academyId: string
   academyName: string
-  studentName: string
+  // studentName: string
   studentId: string
   answerDescription: string
   file: string
