@@ -1,6 +1,6 @@
 import { IActivity } from './activity.interface'
 import Activity from './activity.model'
-import { generateActivityId } from './activity.utils'
+import { generateActivityId, generateAnswerId } from './activity.utils'
 export const createActivitiesService = async (activity: IActivity) => {
   const activityId = await generateActivityId()
   activity.activityId = activityId
@@ -18,10 +18,11 @@ export const postAnswersService = async (
   activityId: string,
   answer: IActivity['answers'][0],
 ) => {
+  const answerId = await generateAnswerId()
   return await Activity.findOneAndUpdate(
-    { activityId: activityId },
+    { activityId },
     {
-      $push: { answers: answer },
+      $push: { answers: { ...answer, answerId } },
     },
     { new: true },
   )
