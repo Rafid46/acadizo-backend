@@ -8,7 +8,7 @@ app.use(
     origin: 'https://chimerical-buttercream-7af93c.netlify.app', // Replace with your Netlify URL
   }),
 )
-
+// app.use(cors())
 // application routes
 import userRoutes from './app/modules/user/user.route'
 import academyRoutes from './app/modules/academy/academy.route'
