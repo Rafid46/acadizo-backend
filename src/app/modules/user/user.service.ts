@@ -50,8 +50,8 @@ export const getUsersByIDFomDb = async (
   payload: string,
 ): Promise<IUser | null> => {
   try {
-    const user = await User.findOne({ email: payload }) // Query the user by email
-    return user // Return user if found, null if not found
+    const user = await User?.findOne({ email: payload }) // Query the user by email
+    return user
   } catch (error) {
     throw new Error('Error fetching user from the database')
   }

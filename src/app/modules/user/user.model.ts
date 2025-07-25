@@ -12,7 +12,7 @@ const userSchema = new Schema<IUser>(
     role: {
       type: String,
       enum: ['student', 'teacher'],
-      required: true,
+      // required: true,
     },
     firstName: {
       type: String,
@@ -33,6 +33,7 @@ const userSchema = new Schema<IUser>(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     contactNo: {
       type: String,
@@ -42,9 +43,11 @@ const userSchema = new Schema<IUser>(
     },
     academyName: {
       type: String,
+      default: ' ',
     },
     academyId: {
       type: String,
+      default: ' ',
     },
     createdAcademy: {
       type: String,

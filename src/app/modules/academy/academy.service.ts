@@ -1,4 +1,3 @@
-import { getAcademy } from './academy.controller'
 import { IAcademy } from './academy.interface'
 import Academy from './academy.model'
 import { generateAcademyId } from './academy.utils'

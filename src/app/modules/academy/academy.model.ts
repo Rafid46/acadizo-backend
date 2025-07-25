@@ -23,8 +23,34 @@ const academySchema = new Schema<IAcademy>(
     },
     academyMembers: [
       {
-        id: String,
-        email: String,
+        id: {
+          type: String,
+          required: true,
+        },
+        email: {
+          type: String,
+          required: true,
+        },
+        role: {
+          type: String,
+        },
+        firstName: {
+          type: String,
+        },
+        lastName: {
+          type: String,
+        },
+        photoURL: {
+          type: String,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+        updatedAt: {
+          type: Date,
+          default: Date.now,
+        },
       },
     ],
     academyIcon: {

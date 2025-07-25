@@ -5,7 +5,7 @@ export type IUser = {
   firstName: string
   lastName: string
   gender: 'male' | 'female'
-  email: 'string'
+  email: string
   contactNo: string
   photoURL: string
   academyName: string

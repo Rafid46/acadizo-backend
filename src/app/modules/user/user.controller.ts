@@ -7,6 +7,7 @@ import {
 } from './user.service'
 import { IUser } from './user.interface'
 import User from './user.model'
+import Academy from '../academy/academy.model'
 
 export const createUser = async (
   req: Request,
@@ -58,6 +59,34 @@ export const updateUser = async (
         message: 'User not found',
       })
     }
+    const memberUpdateFields: any = {}
+    if (updateData.firstName)
+      memberUpdateFields['academyMembers.$.firstName'] = updateData.firstName
+    if (updateData.lastName)
+      memberUpdateFields['academyMembers.$.lastName'] = updateData.lastName
+    if (updateData.role)
+      memberUpdateFields['academyMembers.$.role'] = updateData.role
+    if (updateData.photoURL)
+      memberUpdateFields['academyMembers.$.imageUrl'] = updateData.photoURL
+    if (updateData.photoURL)
+      memberUpdateFields['academyMembers.$.photoURL'] = updateData.role
+    const fieldsToUpdate = ['firstName', 'lastName', 'role', 'photoURL']
+    const memberSetData: Record<string, any> = {}
+
+    fieldsToUpdate.forEach(field => {
+      if (updateData[field]) {
+        memberSetData[`academyMembers.$[elem].${field}`] = updateData[field]
+      }
+    })
+
+    if (Object.keys(memberSetData).length > 0) {
+      await Academy.updateMany(
+        { 'academyMembers.email': email },
+        { $set: memberSetData },
+        { arrayFilters: [{ 'elem.email': email }] },
+      )
+    }
+
     if (updateData?.photoURL) {
       updateData.imageUrl = updateData?.photoURL
     }
@@ -100,7 +129,7 @@ export const getUsers = async (
   })
 }
 
-export const getUsersById = (
+export const getUsersByEmail = (
   req: Request,
   res: Response,
   next: NextFunction,

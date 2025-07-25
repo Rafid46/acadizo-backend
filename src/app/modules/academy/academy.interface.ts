@@ -1,7 +1,11 @@
 interface IAcademyMember {
   id: string
   email: string
-  // role: 'student' | 'teacher'
+  role: 'student' | 'teacher'
+  createdAt: string
+  firstName: string
+  lastName: string
+  photoURL: string
 }
 
 export type IAcademy = {

@@ -1,25 +1,16 @@
 import { Request, Response, NextFunction } from 'express'
-import { joinAcademyForUser } from './joinAcademy.service'
+import { leaveAcademyForUser } from './leaveAcademy.service'
 
-export const handleJoinAcademy = async (
+export const handleLeaveAcademy = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<any> => {
   try {
-    const {
-      userId,
-      academyName,
-      email,
-      role,
-      firstName,
-      lastName,
-      photoURL,
-      academyId,
-    } = req.body
+    const { userId, academyName } = req.body
 
     // Validate request payload
-    if (!userId || !academyName || !email || !role) {
+    if (!userId || !academyName) {
       return res.status(400).json({
         status: 'error',
         message: 'User ID and Academy Name are required.',
@@ -27,20 +18,11 @@ export const handleJoinAcademy = async (
     }
 
     // Call service to handle logic
-    const updatedUser = await joinAcademyForUser(
-      userId,
-      academyName,
-      email,
-      role,
-      firstName,
-      lastName,
-      photoURL,
-      academyId,
-    )
+    const updatedUser = await leaveAcademyForUser(userId, academyName)
 
     return res.status(200).json({
       status: 'success',
-      message: 'User successfully joined the academy.',
+      message: 'User successfully left the academy.',
       data: updatedUser,
     })
   } catch (error: any) {
