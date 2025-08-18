@@ -1,23 +1,35 @@
 import express, { Application, Request, Response, NextFunction } from 'express'
+import authRoutes from './app/modules/auth/auth.route'
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 const app: Application = express()
 import path from 'path'
 import fs from 'fs'
 app.use(
   cors({
-    origin: 'acadizo.netlify.app', // Replace with your Netlify URL
+    origin: [
+      'https://acadizo.netlify.app',
+      'http://localhost:3000',
+      'http://localhost:5173',
+    ],
+    credentials: true,
   }),
 )
 app.use(cors())
+// app.use(cookieParser())
 // application routes
 import userRoutes from './app/modules/user/user.route'
 import academyRoutes from './app/modules/academy/academy.route'
 import moduleRoutes from './app/modules/chapter-modules/module.route'
 import activityRoutes from './app/modules/activity/activity.route'
 import multer from 'multer'
+
 // parse data
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+// app.use('/api/v1/auth', jwtRoutes)
+
+app.use('/auth', authRoutes)
 
 // interface
 // schema
